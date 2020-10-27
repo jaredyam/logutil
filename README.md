@@ -1,22 +1,22 @@
 A collection of scripts used to create and analysis log files
 -------------------------------------------------------------
-### Predefined default log path
+### Pre-defined default log path
 
 ```
 ...
 exec_file.py
 ...
-log
+logs
 └── exec_file
     └── time_stamp.log
 ```
 
 ### Usage
 
-#### utils.py
+#### logger.py
 
 ```python
-from utils import create_logger
+from logger import create_logger
 
 logger = create_logger()
 
