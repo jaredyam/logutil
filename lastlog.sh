@@ -8,45 +8,43 @@
 # Flags
 # -----
 #     -c | --check : take a look at the last output log file.
-#                  default text editor: sublime
+#                    default text editor: sublime
 #
-#     -a | --analysis : print out filtered lines based on the log level information to console.
+#     -a | --analysis : print out filtered lines based on the log level
+#                       information to console.
 #                       Level assignment is needed in this situation.
 
-
-
-function lastlog() {
-    for arg in "$@"
-    do
+lastlog() {
+    for arg in "$@"; do
         case $arg in
-            -c|--check)
-            check=1
-            shift
-            ;;
-            -a|--analysis)
-            analysis=1
-            shift
-            ;;
+            -c | --check)
+                check=1
+                shift
+                ;;
+            -a | --analysis)
+                analysis=1
+                shift
+                ;;
             level=*)
-            LEVEL=$(echo "${arg#*=}" | tr '[:lower:]' '[:upper:]')
-            shift
-            ;;
+                level=$(echo "${arg#*=}" | tr '[:lower:]' '[:upper:]')
+                shift
+                ;;
         esac
     done
 
-    log_root="./log"
+    log_root="./logs"
     last_n_file=$(command ls -t $log_root | head -n ${1:-1} | tail -n 1)
     last_n_log=$(command ls -t $log_root/$last_n_file | head -n ${2:-1} | tail -n 1)
 
-    if [[ check -eq 1 ]]; then
+    if [ -n "$check" ]; then
         subl "${log_root}/${last_n_file}/${last_n_log}"
     fi
 
-    if [[ analysis -eq 1 ]]; then
-        if [ LEVEL ]; then
-            grep -w $LEVEL "${log_root}/${last_n_file}/${last_n_log}"
+    if [ -n "$analysis" ]; then
+        if [ -n "$level" ]; then
+            grep -w $level "${log_root}/${last_n_file}/${last_n_log}"
         else
-            echo "level flag assignment expected"; exit 1
+            echo "level information expected, add the flag: level=*"
         fi
     fi
 }
