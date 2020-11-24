@@ -1,8 +1,8 @@
 import logging
 from pathlib import Path
 
-from utils import EXEC_FILE, EXEC_DATE
-from utils import Color, save_dir
+from .utils import EXEC_FILE, EXEC_DATE, Color
+from .utils import save_dir
 
 
 def create_logger(level='DEBUG',

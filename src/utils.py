@@ -1,15 +1,8 @@
+import sys
 from pathlib import Path
 from datetime import datetime
 
 import __main__
-
-try:
-    EXEC_FILE = Path(__main__.__file__).stem
-except AttributeError as e:
-    EXEC_FILE = input('[Prompt/Notebook] Please assign a name to the current '
-                      'file you are running : ')
-
-EXEC_DATE = datetime.strftime(datetime.now(), '%Y-%m-%d-%H-%M-%S')
 
 
 class Color:
@@ -25,6 +18,23 @@ class Color:
     DARKCYAN = '\033[36m'
     PURPLE = '\033[95m'
     RED = '\033[31m'
+
+
+try:
+    EXEC_FILE = Path(__main__.__file__).stem
+    if EXEC_FILE == 'pytest':
+        raise AttributeError
+except AttributeError:
+    if sys.argv and Path(sys.argv[0]).name != 'ipykernel_launcher.py':
+        EXEC_FILE = Path(sys.argv[1]).resolve().stem
+    else:
+        EXEC_FILE = input(f"{Color.GREEN}[Notebook]{Color.RESET} "
+                          "Can't recognize the name of the current notebook"
+                          ", which could be a problem when you want to save"
+                          " some outputs. "
+                          "Please assign a name to the current file : ")
+
+EXEC_DATE = f'{datetime.now():%Y-%m-%d-%H-%M-%S}'
 
 
 def save_dir(category):
