@@ -1,4 +1,4 @@
-from logger import create_logger
+from src import create_logger
 
 
 def test_create_logger():
