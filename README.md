@@ -1,5 +1,7 @@
-A collection of scripts used to create and analysis log files
--------------------------------------------------------------
+# 📦 Logutil
+
+A collection of scripts used to create and analysis log files.
+
 ### Pre-defined default log path
 
 ```
@@ -16,7 +18,7 @@ logs
 #### logger.py
 
 ```python
-from logger import create_logger
+from src import create_logger
 
 logger = create_logger()
 
